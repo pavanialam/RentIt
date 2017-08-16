@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private CardGridArrayAdapter mCardArrayAdapter;
     private CardGridView gridView;
     public static Properties properties;
+    ArrayList<String> categories;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Card> initCard() {
 
         ArrayList<Card> cards = new ArrayList<Card>();
-    ArrayList<String> categories=new ArrayList<String>();
+        categories=new ArrayList<String>();
         categories.add(0,"Cameras");
         categories.add(1,"Watches");
         categories.add(2,"Gear Cycles");
@@ -191,7 +192,6 @@ public class MainActivity extends AppCompatActivity {
 
         for (int i = 0; i < 5; i++) {
 
-
             MaterialLargeImageCard card = new MaterialLargeImageCard(this.getApplicationContext());
             card.setInnerLayout(R.layout.native_material_largeimage_card);
             card.setDrawableIdCardThumbnail(categories_images.get(i));
@@ -199,17 +199,17 @@ public class MainActivity extends AppCompatActivity {
             card.setTextOverImage(categories.get(i));
             card.build();
 
+            final int finalI = i;
             card.setOnClickListener(new Card.OnCardClickListener() {
                 @Override
                 public void onClick(Card card, View view) {
                     Toast.makeText(getApplicationContext(), " Clicked on category ", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(MainActivity.this, CategoryWiseMaterialCardActivity.class);
+                    intent.putExtra("categoryclicked",categories.get(finalI));
                     startActivity(intent);
-
                 }
             });
             cards.add(card);
-
         }
 
         return cards;

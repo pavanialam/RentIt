@@ -41,12 +41,11 @@ public class AddProductToRent extends AppCompatActivity {
     String final_url;
     private static final String IMAGE_DIRECTORY = "/RentIt";
     private int GALLERY = 1, CAMERA = 2;
-
+    String item;
     Spinner categoryspinner;
     String[] value= {
-            "Cameras", "Speakers", "Watches", "Mobile Phones", "Electronics",
-            "VR Devices", "Gear Cycles", "Smart LCDs", "Gaming CDs", "Sunglasses",
-            "Musical Instruments"};
+            "Cameras", "Watches", "Gear Cycles",
+            "VR Devices", "Mobiles"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +63,8 @@ public class AddProductToRent extends AppCompatActivity {
                 Intent intent = new Intent(AddProductToRent.this, AddProductToRentPricing.class);
                 intent.putExtra("Image_url", final_url);
                 intent.putExtra("Item name", ItemName.getEditText().getText().toString());
-                Log.e("Item name",ItemName.getEditText().getText().toString());
                 intent.putExtra("Item description", ItemDescription.getEditText().getText().toString());
+                intent.putExtra("categoryselected",item);
                 startActivity(intent);
                 finish();
             }
@@ -88,8 +87,7 @@ public class AddProductToRent extends AppCompatActivity {
         categoryspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String item = parent.getItemAtPosition(position).toString();
-                //Toast.makeText(parent.getContext(), "Selected Item: " + item, Toast.LENGTH_LONG).show();
+                item = parent.getItemAtPosition(position).toString();
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {

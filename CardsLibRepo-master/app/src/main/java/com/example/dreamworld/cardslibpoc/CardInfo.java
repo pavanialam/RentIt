@@ -13,6 +13,8 @@ public  class CardInfo{
     public float PricePerMonth;
     public float Securitydeposit;
     public String dateTextView;
+    public String categoryselected;
+
     private static AmazonSimpleDB awsSimpleDB;
 
     //  Get Simple DB connection.

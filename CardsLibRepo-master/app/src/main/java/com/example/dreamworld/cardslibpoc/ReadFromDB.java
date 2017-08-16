@@ -1,14 +1,34 @@
 package com.example.dreamworld.cardslibpoc;
 
 import android.os.AsyncTask;
+
 import com.amazonaws.services.simpledb.model.SelectRequest;
+
 import java.util.List;
 
-public class ReadFromDB extends AsyncTask<Void, Void, CardInfo[]> {
+public class ReadFromDB extends AsyncTask<String, Void, CardInfo[]> {
 
-	public static CardInfo[] getAllCardInfo() throws Exception {
+	public static CardInfo[] getAllCardInfo( String categoryclicked) throws Exception {
 
-        SelectRequest selectRequest = new SelectRequest("select * from card_info").withConsistentRead(true);
+        String domainname;
+        switch(categoryclicked) {
+            case "Cameras" :
+                domainname="cameras_info";
+                break;
+            case "Watches" :
+                domainname="watches_info";
+                break;
+            case "Gear Cycles" :
+                domainname="cycles_info";
+                break;
+            case "VR Devices" :
+                domainname="vr_info";
+                break;
+            default :
+                domainname="mobiles_info";
+        }
+        String query="select * from"+" "+domainname;
+        SelectRequest selectRequest = new SelectRequest(query).withConsistentRead(true);
         List<com.amazonaws.services.simpledb.model.Item> items  = CardInfo.getAwsSimpleDB().select(selectRequest).getItems();
         try {
             com.amazonaws.services.simpledb.model.Item temp1;
@@ -52,10 +72,10 @@ public class ReadFromDB extends AsyncTask<Void, Void, CardInfo[]> {
     }
 
 	@Override
-	protected CardInfo[] doInBackground(Void... params) {
+	protected CardInfo[] doInBackground(String... params) {
 		// TODO Auto-generated method stub
 		try {
-			return getAllCardInfo();
+			return getAllCardInfo(params[0]);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

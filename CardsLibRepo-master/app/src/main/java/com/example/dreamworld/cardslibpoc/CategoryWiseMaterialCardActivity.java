@@ -47,11 +47,11 @@ public class CategoryWiseMaterialCardActivity extends AppCompatActivity {
         if (mRecyclerView != null) {
             mRecyclerView.setAdapter(mCardArrayAdapter);
         }
-
+        final String categoryclicked = getIntent().getStringExtra("categoryclicked");
         // retrieving data from db
         ReadFromDB db=new ReadFromDB();
         try {
-            cardList= db.execute().get();
+            cardList= db.execute(categoryclicked).get();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

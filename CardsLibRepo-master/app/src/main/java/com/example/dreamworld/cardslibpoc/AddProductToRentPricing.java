@@ -2,14 +2,15 @@ package com.example.dreamworld.cardslibpoc;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.borax12.materialdaterangepicker.date.DatePickerDialog;
 import com.github.florent37.materialtextfield.MaterialTextField;
+
 import java.util.Calendar;
 
 public class AddProductToRentPricing extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
@@ -36,6 +37,7 @@ public class AddProductToRentPricing extends AppCompatActivity implements DatePi
         final String final_url = getIntent().getStringExtra("Image_url");
         final String Itemname = getIntent().getStringExtra("Item name").toString();
         final String ItemDescription = getIntent().getStringExtra("Item description").toString();
+        final String categoryselected = getIntent().getStringExtra("categoryselected");
 
         button.setOnClickListener(new View.OnClickListener() {
 
@@ -52,6 +54,7 @@ public class AddProductToRentPricing extends AppCompatActivity implements DatePi
                     object.PricePerWeek = Float.parseFloat(PricePerWeek.getEditText().getText().toString());
                     object.PricePerMonth = Float.parseFloat(PricePerWeek.getEditText().getText().toString());
                     object.Securitydeposit = Float.parseFloat(Securitydeposit.getEditText().getText().toString());
+                    object.categoryselected=categoryselected;
                     new StoreToDB().execute(object).get();
                     Toast.makeText(getApplicationContext(), "New Product added", Toast.LENGTH_LONG).show();
                     finish();
